@@ -11,6 +11,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const db = require("./app/models");
+db.mongoose
+    .connect(db.url)
+    .then(() => {
+        console.log("Connected to Database");
+    })
+    .catch(err => {
+        console.log(`Can't connect to database: ${err}`);
+        process.exit();
+    });
+
 app.get("/", (req, res) => {
     res.json({
         "message": "Practice CRUD using NodeJs and MongoDB",
